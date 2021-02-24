@@ -15,3 +15,6 @@
 # vendor/
 
 go.sum
+
+img/*
+articles/*

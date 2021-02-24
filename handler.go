@@ -27,12 +27,13 @@ func content(ctx *gin.Context) {
 		return
 	}
 
-	md := goldmark.New(goldmark.WithExtensions(extension.GFM),
+	md := goldmark.New(goldmark.WithExtensions(extension.GFM,extension.Typographer),
 		goldmark.WithParserOptions(
 			parser.WithAutoHeadingID(),
+			parser.WithBlockParsers(),
 		),
 		goldmark.WithRendererOptions(
-			html.WithUnsafe(),
+			// html.WithUnsafe(),
 			html.WithHardWraps(),
 		),
 	)
