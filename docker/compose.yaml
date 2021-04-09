@@ -1,0 +1,13 @@
+version: '3.3'
+
+services: 
+  mysql:
+    image: mysql:latest
+    ports: 
+      - 3306:3306
+    volumes: 
+      - ./data:/var/lib/mysql
+      - ./conf/my.cnf:/etc/mysql/my.cnf
+    environment: 
+      - MYSQL_ROOT_PASSWORD=^n~GXbxv#gGm[&O`[o8Z
+    container_name: blogDB
