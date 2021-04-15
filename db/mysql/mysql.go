@@ -125,6 +125,21 @@ func (m *Mysql) CreateTables() error {
 }
 
 func (m *Mysql) createTables() error {
+	db := m.SqlxDB
+	log.Debug("Creating users table if it doesn`t exist")
+	if _, err := db.Exec("CreateUsersTable", "CREATE TABLE IF NOT EXISTS users (id VARCHAR(255) NOT NULL, name VARCHAR(256), password VARCHAR(256), email VARCHAR(256), PRIMARY KEY (id)) DEFAULT CHARSET=utf8 COLLATE utf8_bin"); err != nil {
+		return errors.Wrap(err, "Error creating users table")
+	}
+
+	log.Debug("Creating articles table if it doesn`t exist")
+	if _, err := db.Exec("CreateArticlesTable", "CREATE TABLE IF NOT EXISTS articles (id VARCHAR(255) NOT NULL, owner VARCHAR(256) NOT NULL, title VARCHAR(256), type INTEGER, abstract TEXT, created INTEGER DEFAULT 0, modity INTEGER DEFAULT 0, content TEXT, PRIMARY KEY (id)) DEFAULT CHARSET=utf8 COLLATE utf8_bin"); err != nil {
+		return errors.Wrap(err, "Error creating users table")
+	}
+
+	log.Debug("Creating messages table if it doesn`t exist")
+	if _, err := db.Exec("CreateMessagesTable", "CREATE TABLE IF NOT EXISTS messages (id VARCHAR(255) NOT NULL, atricle VARCHAR(256) NOT NULL, user VARCHAR(256), created INTEGER DEFAULT 0, content TEXT,PRIMARY KEY (id)) DEFAULT CHARSET=utf8 COLLATE utf8_bin"); err != nil {
+		return errors.Wrap(err, "Error creating users table")
+	}
 
 	return nil
 }

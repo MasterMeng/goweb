@@ -51,7 +51,7 @@ func handleFavicon(ctx *gin.Context) {
 }
 
 func handlePost(ctx *gin.Context) {
-	article := &models.Atricles{}
+	article := &models.Atricle{}
 	if err := ctx.ShouldBindJSON(article); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

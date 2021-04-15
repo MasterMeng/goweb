@@ -1,31 +1,29 @@
 package mysql
 
 import (
-	"fmt"
+	"context"
 	"testing"
-
-	"github.com/jmoiron/sqlx"
 )
 
 func TestConnect(t *testing.T) {
-	dsn := "root:root@tcp(localhost:3306)/test"
-	db, err := sqlx.Open("mysql",dsn)
-	if err != nil{
-		t.Fatalf(err.Error())
+	dsn := "root:^n~GXbxv#gGm[&O`[o8Z@tcp(localhost:3306)/blog"
+
+	mysql := NewDB(dsn)
+	err := mysql.Connect()
+	if err != nil {
+		panic(err.Error())
 	}
 
-	db.SetMaxOpenConns(200)
-	db.SetMaxIdleConns(10)
-
-	res,err := db.Exec("CREATE TABLE test( id int);")
-	if err != nil{
-		t.Fatal(err.Error())
+	err = mysql.PingContext(context.TODO())
+	if err != nil {
+		panic(err.Error())
 	}
-	fmt.Println(res.RowsAffected())
 
-	res,err = db.Exec("show tables;")
-	if err != nil{
-		t.Fatal(err.Error())
+	_, err = mysql.CreateDatabase()
+	if err != nil {
+		panic(err.Error())
 	}
-	fmt.Println(res.RowsAffected())
+	if err := mysql.CreateTables(); err != nil {
+		panic(err.Error())
+	}
 }
